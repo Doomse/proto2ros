@@ -63,8 +63,13 @@ target_include_directories(${PROJECT_NAME}_conversions PUBLIC
   "$<INSTALL_INTERFACE:include/${PROJECT_NAME}>"
 )
 rosidl_get_typesupport_target(${PROJECT_NAME}_cpp_msgs ${PROJECT_NAME} "rosidl_typesupport_cpp")
-target_link_libraries(${PROJECT_NAME}_conversions ${${PROJECT_NAME}_cpp_msgs} protobuf::libprotobuf)
-ament_target_dependencies(${PROJECT_NAME}_conversions builtin_interfaces rclcpp std_msgs)
+target_link_libraries(${PROJECT_NAME}_conversions PUBLIC 
+  ${${PROJECT_NAME}_cpp_msgs} 
+  protobuf::libprotobuf
+  ${builtin_interfaces_TARGETS}
+  ${std_msgs_TARGETS}
+  rclcpp::rclcpp
+)
 
 find_program(CLANG_TIDY_EXECUTABLE NAMES "clang-tidy" REQUIRED)
 set(CXX_CLANG_TIDY "${CLANG_TIDY_EXECUTABLE}"

@@ -106,9 +106,14 @@ macro(proto2ros_vendor_package target)
     ${build_include_directories} "$<INSTALL_INTERFACE:include/${PROJECT_NAME}>"
   )
   rosidl_get_typesupport_target(cpp_interfaces ${target} "rosidl_typesupport_cpp")
-  target_link_libraries(${target}_conversions ${cpp_interfaces} ${ARG_CPP_DEPENDENCIES})
-  ament_target_dependencies(${target}_conversions
-    ${ARG_ROS_DEPENDENCIES} builtin_interfaces proto2ros rclcpp)
+  target_link_libraries(${target}_conversions 
+    ${cpp_interfaces} 
+    ${builtin_interfaces_TARGETS}
+    ${proto2ros_TARGETS}
+    proto2ros::proto2ros_conversions
+    rclcpp::rclcpp
+    ${ARG_CPP_DEPENDENCIES}
+  )
 
   find_program(CLANG_TIDY_EXECUTABLE NAMES "clang-tidy")
   if(BUILD_TESTING AND NOT ARG_NO_LINT AND CLANG_TIDY_EXECUTABLE)
