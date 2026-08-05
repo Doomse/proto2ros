@@ -66,8 +66,8 @@ rosidl_get_typesupport_target(${PROJECT_NAME}_cpp_msgs ${PROJECT_NAME} "rosidl_t
 target_link_libraries(${PROJECT_NAME}_conversions PUBLIC 
   ${${PROJECT_NAME}_cpp_msgs} 
   protobuf::libprotobuf
-  ${builtin_interfaces_TARGETS}
-  ${std_msgs_TARGETS}
+  builtin_interfaces::builtin_interfaces
+  std_msgs::std_msgs
   rclcpp::rclcpp
 )
 
